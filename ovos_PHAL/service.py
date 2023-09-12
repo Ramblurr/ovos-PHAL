@@ -39,7 +39,12 @@ class PHAL(OVOSAbstractApplication):
                  on_ready=on_ready, on_error=on_error,
                  on_stopping=on_stopping, on_started=on_started, on_alive=on_alive,
                  watchdog=lambda: None, skill_id="ovos.PHAL", **kwargs):
+        bus_is_null = bus == None
+        LOG.info(f"XXX PHAL ctor bus_is_null={bus_is_null}")
+        bus_is_null = kwargs.get("bus")
+        LOG.info(f"XXX PHAL ctor kwargs bus_is_null={bus_is_null}")
         if not bus:
+            LOG.warning("XXX PHAL CTOR IS MAKING BUS CLIENT")
             bus = MessageBusClient()
             bus.run_in_thread()
         super().__init__(skill_id=skill_id, bus=bus)
